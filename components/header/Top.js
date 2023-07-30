@@ -1,11 +1,14 @@
 import styles from "./styles.module.scss";
-import React from 'react'
+import React, {useState} from 'react'
 import { MdSecurity } from "react-icons/md";
 import { BsSuitHeart } from "react-icons/bs";
 import { RiAccountPinCircleLine, RiArrowDropDownFill } from "react-icons/ri";
 import Link from "next/link";
+import UserMenu from "./UserMenu";
 
 export default function Top() {
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [visible, setVisible] = useState(false);
   return (
         <div className={styles.top}>
             <div className={styles.top__container}>
@@ -21,16 +24,23 @@ export default function Top() {
                   </li>
                   <li className={styles.li}>
                     <span>Customer Service</span>
-                   </li>
-                   <li className={styles.li}>
-                       <span>Help</span>
-                    </li>
+                  </li>
+                  <li className={styles.li}>
+                    <span>Help</span>
+                  </li>
+                  <li className={styles.li}
+                    onMouseOver={() => setVisible(true)}
+                    onMouseLeave={() => setVisible(false)}
+                  >
+                    { loggedIn ? (
                     <li className={styles.li}>
-                      <BsSuitHeart />
-                      <Link href="/profile/whishlist">
-                        <span>Whishlist</span>
-                      </Link>
+                      <div className={styles.flex}>
+                        <img src="https://img.freepik.com/premium-vector/person-avatar-icon-design-vector-multiple-use-vector-illustration_625349-280.jpg?w=740" alt="" />
+                        <span>Mohan</span>
+                        <RiArrowDropDownFill />
+                      </div>
                     </li>
+                    ) : (
                     <li className={styles.li}>
                       <div className={styles.flex}>
                         <RiAccountPinCircleLine />
@@ -38,6 +48,9 @@ export default function Top() {
                         <RiArrowDropDownFill />
                       </div>
                     </li>
+                    )}
+                    {visible && <UserMenu session={loggedIn} />}
+                  </li>                    
                 </ul>
             </div>
         </div>
